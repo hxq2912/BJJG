@@ -13,27 +13,24 @@ const config = {
     path: path.join(__dirname, 'dist')
   },
   module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.jsx$/,
-        loader: 'babel-loader'
-      },
-      {
-        test: /\.(gif|jpg|jpeg|png|svg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 1024,
-              name: '[name]-aaa.[ext]'
-            }
-          }
-        ]
-      }
+    rules: [{
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    },
+    {
+      test: /\.jsx$/,
+      loader: 'babel-loader'
+    },
+    {
+      test: /\.(gif|jpg|jpeg|png|svg)$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 1024,
+          name: '[name]-aaa.[ext]'
+        }
+      }]
+    }
     ]
   },
   plugins: [
@@ -55,7 +52,7 @@ if (isDev) {
       {
         loader: 'postcss-loader',
         options: {
-          sourceMap: true,
+          sourceMap: true
         }
       },
       'stylus-loader'
@@ -63,10 +60,10 @@ if (isDev) {
   })
   config.devtool = '#cheap-module-eval-source-map'
   config.devServer = {
-    port: 8000,
+    port: 8080,
     host: '0.0.0.0',
     overlay: {
-      errors: true,
+      errors: true
     },
     hot: true
   }
@@ -80,24 +77,22 @@ if (isDev) {
     vendor: ['vue']
   }
   config.output.filename = '[name].[chunkhash:8].js'
-  config.module.rules.push(
-    {
-      test: /\.styl/,
-      use: ExtractPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-            }
-          },
-          'stylus-loader'
-        ]
-      })
-    },
-  )
+  config.module.rules.push({
+    test: /\.styl/,
+    use: ExtractPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
+        },
+        'stylus-loader'
+      ]
+    })
+  })
   config.plugins.push(
     new ExtractPlugin('styles.[contentHash:8].css'),
     new webpack.optimize.CommonsChunkPlugin({

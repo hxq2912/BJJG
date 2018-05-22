@@ -22,7 +22,7 @@ const defaultPluins = [
 ]
 
 const devServer = {
-  port: 8000,
+  port: 8080,
   host: '0.0.0.0',
   overlay: {
     errors: true
@@ -44,22 +44,20 @@ if (isDev) {
   config = merge(baseConfig, {
     devtool: '#cheap-module-eval-source-map',
     module: {
-      rules: [
-        {
-          test: /\.styl/,
-          use: [
-            'vue-style-loader',
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            'stylus-loader'
-          ]
-        }
-      ]
+      rules: [{
+        test: /\.styl/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'stylus-loader'
+        ]
+      }]
     },
     devServer,
     plugins: defaultPluins.concat([
@@ -78,24 +76,22 @@ if (isDev) {
       publicPath: cdnConfig.host
     },
     module: {
-      rules: [
-        {
-          test: /\.styl/,
-          use: ExtractPlugin.extract({
-            fallback: 'vue-style-loader',
-            use: [
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true
-                }
-              },
-              'stylus-loader'
-            ]
-          })
-        }
-      ]
+      rules: [{
+        test: /\.styl/,
+        use: ExtractPlugin.extract({
+          fallback: 'vue-style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            'stylus-loader'
+          ]
+        })
+      }]
     },
     plugins: defaultPluins.concat([
       new ExtractPlugin('styles.[contentHash:8].css'),
